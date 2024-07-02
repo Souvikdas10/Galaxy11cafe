@@ -8,8 +8,8 @@ const app = express();
 const PORT = process.env.PORT || 3500
 const dbLink = process.env.MONGODB_URL;
 
-const ApiRoute = require('./Route/BookingRoute');
-const { log } = require('console');
+const ApiRoute = require('./Route/apiRoute');
+const AdminRoute = require('./Route/AdminRoute');
 
 
 
@@ -18,10 +18,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 
-// app.use('/uploads', express.static('uploads'))
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static('uploads'))
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(ApiRoute);
+app.use(AdminRoute);
 
 
 
