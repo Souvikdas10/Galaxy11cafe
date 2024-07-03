@@ -1,0 +1,15 @@
+Product Api [get method] --> http://localhost:3500/api/products
+
+Banner Api [get method] --> http://localhost:3500/api/banner
+
+Create-Rating Api [post method] --> http://localhost:3500/api/create-Ratings
+
+Show-Rating Api [get method] --> http://localhost:3500/api/ratings
+
+Bookings Api [post method] --> http://localhost:3500/api/bookings
+
+<!-- Get Bookings Api [get method] --> http://localhost:3500/api/getbookings -->
+
+Bookings Time Slot [get method] --> http://localhost:3500/api/available-time-slots
+
+Offer Zone [get method] --> http://localhost:3500/api/offer

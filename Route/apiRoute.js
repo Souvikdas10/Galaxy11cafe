@@ -5,7 +5,7 @@ const uploadImage=require('../middleware/uploadImg')
 
 
 Route.get('/api/products', ApiController.product)
-Route.post('/api/create-banner', ApiController.createBanner)
+Route.get('/api/banner', ApiController.banner)
 
 Route.post('/api/create-Ratings',uploadImage.single('image'), ApiController.createReating)
 Route.get('/api/ratings', ApiController.rating)

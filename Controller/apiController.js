@@ -18,7 +18,7 @@ exports.product = async (req, res) => {
 }
 
 
-exports.createBanner = async (req, res) => {
+exports.banner = async (req, res) => {
     try {
         const bannerimg = await BannerModel.find()
         res.status(200).json({ success: true, msg: " Banner Image show", data: bannerimg, status: 200 })
