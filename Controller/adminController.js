@@ -1,12 +1,116 @@
 const productModel = require('../model/productModel');
-const ProductModel=require('../model/productModel');
+const adminModel = require('../model/adminModel')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const path = require('path')
 
-exports.product=(req,res)=>{
+
+exports.adminauth = (req, res, next) => {
+    if (req.admin) {
+        // console.log(req.admin, "aa");
+        next();
+    } else {
+        // console.log(req.admin, "bb");
+        // req.flash('error', "can not access this page ..please login first")
+        res.redirect('/admin/')
+    }
+}
+
+exports.registration = (req, res) => {
+    // console.log(result);
+    res.render('admin/registration', {
+        title: 'registration Page',
+        data: req.admin,
+        message: req.flash('message'),
+        error: req.flash('error'),
+    })
+}
+
+exports.register_create = (req, res) => {
+    const signup = new adminModel({
+        fname: req.body.fname,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
+    })
+    if (req.file) {
+        signup.image = req.file.path
+    }
+    signup.save().then(result => {
+        // console.log(result);
+        // req.flash('message', "Admin Register Successfull..")
+
+        res.redirect('/admin/')
+    }).catch(err => {
+        // console.log(err);
+        // req.flash('error', "Admin Register Try again...")
+        res.redirect('/admin/registation')
+
+    })
+}
+
+exports.login = (req, res) => {
+    loginData = {}
+    loginData.email = (req.cookies.email) ? req.cookies.email : undefined
+    loginData.password = (req.cookies.password) ? req.cookies.password : undefined
+    res.render('./admin/login', {
+        title: "admin || login",
+        // message: req.flash('message'),
+        // error: req.flash('error'),
+        data1: loginData,
+        data: req.admin,
+
+    })
+}
+
+exports.logincreate = (req, res) => {
+    adminModel.findOne({
+        email: req.body.email
+    }, (err, data) => {
+        if (data) {
+            const haspassword = data.password
+            if (bcrypt.compareSync(req.body.password, haspassword)) {
+                const token = jwt.sign({
+                    id: data._id,
+                    fname: data.fname,
+                    image: data.image
+                }, 'galaxy11cafe@2024', { expiresIn: '1h' })
+                res.cookie('AdminToken', token)
+                if (req.body.rememberme) {
+                    res.cookie('email', req.body.email)
+                    res.cookie('password', req.body.password)
+                }
+                // console.log(data);
+                // req.flash('message', "You are Login Successfully")
+                res.redirect('/admin/dashboard')
+            } else {
+                // console.log("Incorrect password");
+                // req.flash('error', "Incorrect password")
+
+                res.redirect('/admin/')
+            }
+        } else {
+            // console.log("Incorrect email");
+            // req.flash('error', "Incorrect Email")
+            res.redirect('/admin/')
+        }
+    })
+}
+
+exports.logout = (req, res) => {
+    res.clearCookie('AdminToken')
+    res.redirect('/admin/')
+}
+
+exports.dashboard = (req, res) => {
 
 }
 
-exports.createProduct=(req,res)=>{
-    const productData = new Productmodel({
+exports.product = (req, res) => {
+
+}
+
+exports.createProduct = (req, res) => {
+    const productData = new productModel({
         product_name: req.body.product_name,
         description: req.body.description,
         price: req.body.price
@@ -27,6 +131,6 @@ exports.createProduct=(req,res)=>{
     })
 }
 
-exports.edit=(req,res)=>{
-   
+exports.edit = (req, res) => {
+
 }

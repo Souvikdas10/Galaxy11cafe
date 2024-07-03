@@ -4,6 +4,7 @@ const ratingModel = require('../model/ratingModel');
 const RatingModel = require('../model/ratingModel');
 const BannerModel = require('../model/bannerImg');
 const asyncHandler = require('express-async-handler');
+const offerModel = require('../model/percentageModel')
 const path= require('path');
 
 exports.product = async (req, res) => {
@@ -32,7 +33,7 @@ exports.createReating = async (req, res) => {
         const ratings = await new ratingModel({
             name: req.body.name,
             description: req.body.description,
-            rating: req.body.rating,
+            ratings: req.body.ratings,
         });
         if (req.file) {
             ratings.image = req.file.path
@@ -101,7 +102,6 @@ exports.getAvailableTimeSlots = asyncHandler(async (req, res, next) => {
                 const startTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
                 const endTime = `${hour.toString().padStart(2, '0')}:${(minute + 30).toString().padStart(2, '0')}`;
                 let isAvailable = true;
-
                 bookings.forEach((booking) => {
                     if (booking.startTime === startTime && booking.endTime === endTime) {
                         isAvailable = false;
@@ -120,4 +120,15 @@ exports.getAvailableTimeSlots = asyncHandler(async (req, res, next) => {
         res.status(500).json({ message: 'Error fetching available time slots' });
     }
 });
+
+exports.Offerzone = async (req , res) =>{
+    try {
+        const offerData = await offerModel.find()
+        res.status(200).json({ success: true, msg: " Offer fetch Successfully", data: offerData})
+    } catch (error) {
+        res.status(400).json({ success: true, msg: error.message })
+
+    } 
+}
+
 
