@@ -15,6 +15,12 @@ const BookingSchema = new Schema(
       type: String,
       required: true
     },
+    event_Type: {
+      type: String
+    },
+    person: {
+      type: String,
+    },
     date: {
       type: Date,
       // default:new Date(GMT),
@@ -26,11 +32,12 @@ const BookingSchema = new Schema(
       required: true
 
     },
-    endTime: {
-      type: String,
-      required: true
+    // endTime: {
+    //   type: String,
+    //   required: true
 
-    },
+    // },
+
     // }, { timestamps: true })
   })
 const BookingModel = new mongoose.model('booking', BookingSchema);

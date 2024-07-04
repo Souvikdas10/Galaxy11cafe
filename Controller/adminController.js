@@ -1,6 +1,7 @@
 const productModel = require('../model/productModel');
 const bannerModel = require('../model/bannerImg');
 const adminModel = require('../model/adminModel')
+const offerModel = require ('../model/OfferModel')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const path = require('path')
@@ -176,4 +177,12 @@ exports.createBanner = (req, res) => {
         res.redirect('/admin/banner')
 
     })
+}
+ 
+exports.offer = (req,res)=>{
+   
+}
+
+exports.createoffer = (req,res)=>{
+   
 }

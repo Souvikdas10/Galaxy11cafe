@@ -11,6 +11,7 @@ Route.post('/admin/registationCreate', uploadImage.single('image') , [Duplicate.
 Route.get('/admin/',AdminController.login)
 Route.post('/admin/logincreate' ,AdminController.logincreate)
 
+Route.get('/admin/dashboard', AdminController.dashboard)
 
 Route.get('/admin/product',AdminController.product)
 Route.post('/admin/Create-product',uploadImage.single('image'),AdminController.createProduct)
@@ -23,8 +24,8 @@ Route.post('/admin/create-Banner',uploadImage.single('image'),AdminController.cr
 // Route.post('/admin/create-Banner',multiImgUp,AdminController.createBanner)
 
 
-Route.get('/admin/dashboard', AdminController.dashboard)
-Route.get('/admin/', AdminController.login)
+Route.get('/admin/offer',AdminController.offer)
+Route.post('/admin/create-offer',uploadImage.single('image'),AdminController.createoffer)
 
 
 module.exports = Route;

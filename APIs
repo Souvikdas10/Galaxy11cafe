@@ -13,3 +13,4 @@ Bookings Api [post method] --> http://localhost:3500/api/bookings
 Bookings Time Slot [get method] --> http://localhost:3500/api/available-time-slots
 
 Offer Zone [get method] --> http://localhost:3500/api/offer
+

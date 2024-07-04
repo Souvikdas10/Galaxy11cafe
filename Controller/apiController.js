@@ -4,7 +4,7 @@ const ratingModel = require('../model/ratingModel');
 const RatingModel = require('../model/ratingModel');
 const BannerModel = require('../model/bannerImg');
 const asyncHandler = require('express-async-handler');
-const offerModel = require('../model/percentageModel')
+const offerModel = require('../model/OfferModel')
 const path= require('path');
 
 exports.product = async (req, res) => {
@@ -66,9 +66,11 @@ exports.createBooking = asyncHandler(async (req, res, next) => {
             name: req.body.name,
             email: req.body.email,
             contact: req.body.contact,
+            event_Type: req.body.event_Type,
+            person: req.body.person,
             date: req.body.date,
             startTime: req.body.startTime,
-            endTime: req.body.endTime
+            // endTime: req.body.endTime
         });
 
 
