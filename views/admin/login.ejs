@@ -1,0 +1,168 @@
+<h1>login......</h1>
+
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="btn btn-success" type="button" data-toggle="modal"
+                data-target="#exampleModal" data-whatever="@mdo">Add Product
+            </h6>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add Product
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/admin/productCreate" method="post"
+                                enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label class="col-form-label">Product Name:</label>
+                                    <input type="text" class="form-control"
+                                        name="product_name" placeholder="Product Name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">Product
+                                        Details:</label>
+                                    <input type="text" class="form-control"
+                                        name="product_about"
+                                        placeholder="Product Details">
+                                </div>
+                                <div class="form-group">
+
+                                <label class="col-form-label">Product Category</label>
+
+                                <select name="category" class="form-control" name="category">
+                                    <%if(cat_Data.length>0){
+                                        for(let data of cat_Data){
+                                            if(data.status){%>
+                                    <option value="<%=data.category%>"><%=data.category%></option>
+                                   <%}}}%>
+                                 
+                                </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">Sub Category</label>
+                                    <select name="subcategory" class="form-control" >
+                                        <%if(subCat_Data.length>0){
+                                            for(let data3 of subCat_Data){
+                                                if(data3.status){%>
+                                        <option value="<%=data3.subcategory%>"><%=data3.subcategory%></option>
+                                       <%}}}%>                                        
+                                    </select>
+                                    </div>
+
+                                <div class="form-group">
+                                    <label class="col-form-label">Price:</label>
+                                    <input type="text" class="form-control"
+                                        name="product_price"
+                                        placeholder="Product Price">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">Image:</label>
+                                    <input type="file" class="form-control"
+                                        name="image">
+
+                                </div>
+                                <div class="modal-footer form-group">
+                                    <label class="col-form-label"></label>
+                                    <!-- <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Close</button> -->
+                                    <input type="submit" class="btn btn-primary"
+                                        value="submit">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%"
+                    cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>Product Name</th>
+                            <th>Product Details</th>
+                            <th>Price</th>
+                            <th>Image</th>
+                            <th>Category</th>
+                            <th>Sub Category</th>
+                            <th>Status</th>
+                            <th colspan="2">Operation</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <%let count=1%>
+                        <%if(displayData.length>0){
+                            for(let data2 of displayData){%>
+                        <tr>
+                            <td>
+                                <%=count++%>
+
+                            </td>
+
+                            <td>
+                                <%=data2.product_name%>
+
+                            </td>
+                            <td>
+                                <%=data2.product_about%>
+                            <td>
+                                <%=data2.product_price%>
+                            </td>
+                            <td>
+                                <img src="/<%-data2.image%>" alt="" height="50px"
+                                    width="50px">
+                            </td>
+                            
+                            <td>
+                                <%=data2.category%>
+                            </td>
+                            <td>
+                                <%=data2.subcategory%>
+                            </td>
+                            <td>
+                                <%=data2.status%>
+                            </td>
+
+                            
+                            <% if(data2.status) {%>
+                                <td>
+                                    <a href=" /admin/deactiveProduct/<%=data2._id %>"
+                                        class="btn btn-danger">Deactive</a>
+                                </td>
+                                <% } else{%>
+                                    <td>
+                                        <a href="/admin/activeProduct/<%= data2._id %>"
+                                            class="btn btn-success">Active</a>
+                                    </td>
+                                    <% } %>
+
+                            <!-- <td><a href="">
+                                    <i class="fa-sharp fa-solid fa-pen-to-square"></i>
+                                </a>
+                            </td> -->
+                        </tr>
+                        <%}}%>
+                    </tbody>
+
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>

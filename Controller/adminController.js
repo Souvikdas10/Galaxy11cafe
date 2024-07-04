@@ -1,4 +1,5 @@
 const productModel = require('../model/productModel');
+const bannerModel = require('../model/bannerImg');
 const adminModel = require('../model/adminModel')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -28,7 +29,7 @@ exports.registration = (req, res) => {
 
 exports.register_create = (req, res) => {
     const signup = new adminModel({
-        fname: req.body.fname,
+        name: req.body.name,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
     })
@@ -49,15 +50,15 @@ exports.register_create = (req, res) => {
 }
 
 exports.login = (req, res) => {
-    loginData = {}
-    loginData.email = (req.cookies.email) ? req.cookies.email : undefined
-    loginData.password = (req.cookies.password) ? req.cookies.password : undefined
+    // loginData = {}
+    // loginData.email = (req.cookies.email) ? req.cookies.email : undefined
+    // loginData.password = (req.cookies.password) ? req.cookies.password : undefined
     res.render('./admin/login', {
         title: "admin || login",
         // message: req.flash('message'),
         // error: req.flash('error'),
-        data1: loginData,
-        data: req.admin,
+        // data1: loginData,
+        // data: req.admin,
 
     })
 }
@@ -102,11 +103,20 @@ exports.logout = (req, res) => {
 }
 
 exports.dashboard = (req, res) => {
+    res.render('admin/dashboard', {
+        title: 'dashboard Page',
 
+    })
 }
 
 exports.product = (req, res) => {
+    productModel.find().then(result => {
+        res.render('admin/product', {
+            title: 'product Page',
+            displayData: result,
 
+        })
+    })
 }
 
 exports.createProduct = (req, res) => {
@@ -119,18 +129,51 @@ exports.createProduct = (req, res) => {
         productData.image = req.file.path
     }
     productData.save().then(result => {
-        // console.log(result);
-        req.flash('message', "Product added successfull..")
+        console.log(result);
+        // req.flash('message', "Product added successfull..")
+        console.log('message', "Product added successfull..")
 
         res.redirect('/admin/product')
     }).catch(err => {
-        // console.log(err);
-        req.flash('error', "Product not added ..")
+        console.log(err);
+        // req.flash('error', "Product not added ..")
         res.redirect('/admin/product')
 
     })
 }
 
 exports.edit = (req, res) => {
+    res.render('admin/edit', {
+        title: 'edit Page',
+        // displayData: result,
 
+    })
+}
+exports.banner = (req, res) => {
+    bannerModel.find().then(result => {
+        res.render('admin/banner', {
+            title: 'Banner ',
+            displayData: result,
+        })
+    })
+}
+exports.createBanner = (req, res) => {
+    const banner = new bannerModel({
+        description: req.body.description,
+    })
+    if (req.file) {
+        banner.image = req.file.path
+    }
+    banner.save().then(result => {
+        console.log(result);
+        // req.flash('message', "Product added successfull..")
+        console.log('message', "Product added successfull..")
+
+        res.redirect('/admin/banner')
+    }).catch(err => {
+        console.log(err);
+        // req.flash('error', "Product not added ..")
+        res.redirect('/admin/banner')
+
+    })
 }

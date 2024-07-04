@@ -2,6 +2,8 @@ const dotenv = require('dotenv').config()
 const express = require('express');
 const bodyparser = require('body-parser');
 const mongoose = require('mongoose');
+const ejs = require('ejs');
+
 const cors = require('cors');
 const path = require('path')
 const app = express();
@@ -20,6 +22,9 @@ app.use(bodyparser.json());
 
 app.use('/uploads', express.static('uploads'))
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.set('view engine', 'ejs');
+app.set('views', 'views');
 
 app.use(ApiRoute);
 app.use(AdminRoute);

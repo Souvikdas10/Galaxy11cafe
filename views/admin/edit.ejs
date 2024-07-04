@@ -1,0 +1,52 @@
+<%-include('common/head')%>
+
+    <body class="sb-nav-fixed">
+        <%-include('common/topbar')%>
+            <div id="layoutSidenav">
+                <%-include('common/sidebar')%>
+                    <div id="layoutSidenav_content">
+                        <main>
+                            <div class="container-fluid px-4">
+                                <h1 class="mt-4">edit</h1>
+                            <div class="container">
+                                <div class="card-header py-3">
+                                    <div class="modal-body">
+                                        <form action="/admin/productCreate" method="post" enctype="multipart/form-data">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Product Name:</label>
+                                                <input type="text" class="form-control" name="product_name"
+                                                    placeholder="Product Name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-form-label">Product
+                                                    Details:</label>
+                                                <input type="text" class="form-control" name="product_about"
+                                                    placeholder="Product Details">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-form-label">Price:</label>
+                                                <input type="text" class="form-control" name="product_price"
+                                                    placeholder="Product Price">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-form-label">Image:</label>
+                                                <input type="file" class="form-control" name="image">
+                                            </div>
+                                            <div class="modal-footer form-group">
+                                                <!-- <label class="col-form-label"></label>
+                                                <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button> -->
+                                                <input type="submit" class="btn btn-primary" value="Submit">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    </div>
+            </div>
+            <%-include('common/footer')%>
+
+
+    </body>
