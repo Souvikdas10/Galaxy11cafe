@@ -210,6 +210,14 @@ dd {
   margin-left: 0;
 }
 
+.rounded-circle {
+  border-radius: 50% !important;
+}
+.img-profile {
+  height: 2rem;
+  width:2rem;
+}
+
 blockquote {
   margin: 0 0 1rem;
 }

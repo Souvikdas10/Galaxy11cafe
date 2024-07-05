@@ -3,6 +3,12 @@ const express = require('express');
 const bodyparser = require('body-parser');
 const mongoose = require('mongoose');
 const ejs = require('ejs');
+const jwt = require ('jsonwebtoken')
+// const flash = require ('connect-flash')
+const session = require ('express-session')
+const cookieparser = require ('cookie-parser')
+const adminauth = require ('./middleware/AdminAuth')
+
 
 const cors = require('cors');
 const path = require('path')
@@ -20,8 +26,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 
+
+// app.use(flash());
+app.use(cookieparser());
+app.use(session({
+    cookie: { maxAge: 5000 },
+    secret: 'nodejs',
+    resave: false,
+    saveUninitialized: false
+}))
+
+
 app.use('/uploads', express.static('uploads'))
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(adminauth.adminjwt)
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');

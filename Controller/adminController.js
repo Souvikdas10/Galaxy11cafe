@@ -4,7 +4,8 @@ const adminModel = require('../model/adminModel')
 const offerModel = require ('../model/OfferModel')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const path = require('path')
+const path = require('path');
+const { name } = require('ejs');
 
 
 exports.adminauth = (req, res, next) => {
@@ -23,8 +24,8 @@ exports.registration = (req, res) => {
     res.render('admin/registration', {
         title: 'registration Page',
         data: req.admin,
-        message: req.flash('message'),
-        error: req.flash('error'),
+        // message: req.flash('message'),
+        // error: req.flash('error'),
     })
 }
 
@@ -51,15 +52,15 @@ exports.register_create = (req, res) => {
 }
 
 exports.login = (req, res) => {
-    // loginData = {}
-    // loginData.email = (req.cookies.email) ? req.cookies.email : undefined
-    // loginData.password = (req.cookies.password) ? req.cookies.password : undefined
+    loginData = {}
+    loginData.email = (req.cookies.email) ? req.cookies.email : undefined
+    loginData.password = (req.cookies.password) ? req.cookies.password : undefined
     res.render('./admin/login', {
         title: "admin || login",
         // message: req.flash('message'),
         // error: req.flash('error'),
-        // data1: loginData,
-        // data: req.admin,
+        data1: loginData,
+        data: req.admin,
 
     })
 }
@@ -73,19 +74,22 @@ exports.logincreate = (req, res) => {
             if (bcrypt.compareSync(req.body.password, haspassword)) {
                 const token = jwt.sign({
                     id: data._id,
-                    fname: data.fname,
+                    name: data.name,
                     image: data.image
                 }, 'galaxy11cafe@2024', { expiresIn: '1h' })
                 res.cookie('AdminToken', token)
+                console.log(data.name);
+                console.log(data.image);
                 if (req.body.rememberme) {
                     res.cookie('email', req.body.email)
                     res.cookie('password', req.body.password)
                 }
                 // console.log(data);
+                // console.log(req.body);
                 // req.flash('message', "You are Login Successfully")
                 res.redirect('/admin/dashboard')
             } else {
-                // console.log("Incorrect password");
+                console.log("Incorrect password");
                 // req.flash('error', "Incorrect password")
 
                 res.redirect('/admin/')
@@ -106,6 +110,7 @@ exports.logout = (req, res) => {
 exports.dashboard = (req, res) => {
     res.render('admin/dashboard', {
         title: 'dashboard Page',
+        data: req.admin
 
     })
 }
@@ -114,6 +119,7 @@ exports.product = (req, res) => {
     productModel.find().then(result => {
         res.render('admin/product', {
             title: 'product Page',
+            data: req.admin,
             displayData: result,
 
         })
@@ -154,6 +160,7 @@ exports.banner = (req, res) => {
     bannerModel.find().then(result => {
         res.render('admin/banner', {
             title: 'Banner ',
+            data: req.admin,
             displayData: result,
         })
     })
@@ -180,9 +187,32 @@ exports.createBanner = (req, res) => {
 }
  
 exports.offer = (req,res)=>{
-   
+    offerModel.find().then(result => {
+        res.render('admin/offer', {
+            title: 'offer ',
+            displayData: result,
+        })
+    })
 }
 
 exports.createoffer = (req,res)=>{
-   
+    const offer = new offerModel({
+        offer_name: req.body.offer_name,
+        offer_percentage: req.body.offer_percentage,
+    })
+    if (req.file) {
+        offer.image = req.file.path
+    }
+    offer.save().then(result => {
+        console.log(result);
+        // req.flash('message', "Product added successfull..")
+        console.log('message', "Offer added successfull..")
+
+        res.redirect('/admin/offer')
+    }).catch(err => {
+        console.log(err);
+        // req.flash('error', "Product not added ..")
+        res.redirect('/admin/offer')
+
+    })
 }

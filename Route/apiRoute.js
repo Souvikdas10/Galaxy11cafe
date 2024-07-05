@@ -2,12 +2,15 @@ const express = require('express');
 const Route = express.Router()
 const ApiController = require('../Controller/apiController')
 const uploadImage=require('../middleware/uploadImg')
+const multiImage = require ('../middleware/mutiImg')
 
 
 Route.get('/api/products', ApiController.product)
 Route.get('/api/banner', ApiController.banner)
 
+// Route.post('/api/create-Ratings',multiImage, ApiController.createReating)
 Route.post('/api/create-Ratings',uploadImage.single('image'), ApiController.createReating)
+
 Route.get('/api/ratings', ApiController.rating)
 
 Route.post('/api/bookings', ApiController.createBooking);

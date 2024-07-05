@@ -11,7 +11,9 @@ Route.post('/admin/registationCreate', uploadImage.single('image') , [Duplicate.
 Route.get('/admin/',AdminController.login)
 Route.post('/admin/logincreate' ,AdminController.logincreate)
 
-Route.get('/admin/dashboard', AdminController.dashboard)
+Route.get('/admin/logout',AdminController.logout)
+
+Route.get('/admin/dashboard',AdminController.adminauth,AdminController.dashboard)
 
 Route.get('/admin/product',AdminController.product)
 Route.post('/admin/Create-product',uploadImage.single('image'),AdminController.createProduct)

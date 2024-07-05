@@ -30,13 +30,24 @@ exports.banner = async (req, res) => {
 
 exports.createReating = async (req, res) => {
     try {
+        // let imageArray=[]
         const ratings = await new ratingModel({
             name: req.body.name,
             description: req.body.description,
             ratings: req.body.ratings,
+            // image: req.body.image
+
         });
+        // console.log(req.body.image,'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        // console.log(req);
+        // req.file.map(item =>{
+        //     imageArray.push (item.filename)
+        //     console.log(item,">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        // })
+
         if (req.file) {
             ratings.image = req.file.path
+
         }
 
         const result = await ratings.save();

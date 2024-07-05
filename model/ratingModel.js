@@ -22,7 +22,8 @@ const ratingSchema = new mongoose.Schema({
     image: {
         type: String,
         // required: true
-    },
+},
+
 });
 
 // Add a getter function to retrieve the rating of a product

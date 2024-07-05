@@ -75,17 +75,16 @@
                                             <thead>
                                                 <tr>
                                                     <th>Image</th>
-                                                    <!-- <th>Description</th> -->
-                                                    <th>Action</th>
+                                                    <th>Offer Name</th>
+                                                    <th>Offer Percentage</th>
 
                                                 </tr>
                                             </thead>
                                             <tfoot>
                                                 <tr>
                                                     <th>Image</th>
-                                                    <!-- <th>Description</th> -->
-                                                    <th>Action</th>
-                                                    
+                                                    <th>Offer Name</th>
+                                                    <th>Offer Percentage</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
@@ -97,11 +96,14 @@
                                                                 width="50px"></td>
 
                                                         
-                                                        <!-- <td>
-                                                            <%=data2.description%>
-                                                        </td> -->
-                                                        <td><a href="/admin/remove/<%= data2._id%>" class="btn btn-danger">
-                                                            <i class="fa-solid fa-trash"></i></a></td>
+                                                        <td>
+                                                            <%=data2.offer_name%>
+                                                        </td>
+                                                        <td>
+                                                            <%=data2.offer_percentage%>
+                                                        </td>
+                                                        <!-- <td><a href="/admin/remove/<%= data2._id%>" class="btn btn-danger">
+                                                            <i class="fa-solid fa-trash"></i></a></td> -->
                                                     </tr>
                                                     <%}}%>
                                             </tbody>
