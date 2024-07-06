@@ -5,6 +5,17 @@
             <div id="layoutSidenav">
                 <%-include('common/sidebar')%>
                     <div id="layoutSidenav_content">
+                        <%if(message.length>0){%>
+                            <div class="alert alert-success" role="alert">
+                                <%=message%>
+                              </div>
+                              <%}%>
+                        
+                              <%if(error.length>0){%>
+                                <div class="alert alert-danger" role="alert">
+                                    <%=error%>
+                                  </div>
+                                  <%}%>
                         <main>
                             <div class="container-fluid px-4">
                                 <h1 class="mt-4">Banner</h1>
@@ -13,9 +24,7 @@
                         </ol> -->
                                 <div class="card mb-4">
                                     <div class="card-header">
-                                        <i class="fas fa-table me-1"></i>
-                                        DataTable Example
-                                    </div>
+                                       
 
                                     <!-- <a href="/admin/add-product" class="btn btn-success">Add-Student</a> -->
 
@@ -63,6 +72,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    </div>
                                     <div class="card-body">
                                         <table id="datatablesSimple">
                                             <thead>
@@ -93,7 +103,7 @@
                                                         <!-- <td>
                                                             <%=data2.description%>
                                                         </td> -->
-                                                        <td><a href="/admin/remove/<%= data2._id%>" class="btn btn-danger">
+                                                        <td><a href="/admin/deleteBanner/<%= data2._id%>" class="btn btn-danger">
                                                             <i class="fa-solid fa-trash"></i></a></td>
                                                     </tr>
                                                     <%}}%>
