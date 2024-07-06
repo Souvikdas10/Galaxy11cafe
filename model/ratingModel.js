@@ -4,7 +4,6 @@ const path = require('path')
 const ratingSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
     },
     description: {
         type: String,

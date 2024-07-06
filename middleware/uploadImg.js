@@ -16,15 +16,15 @@ const uploadlmage = multer({
     storage: storage,
     fileFilter: function (req, file, callback) {
         if (
-            file.mimetype == 'image/png' ||
-            file.mimetype == 'image/jpg' ||
-            file.mimetype == 'image/jpeg'
+          file.mimetype == "image/png" ||
+          file.mimetype == "image/jpg" ||
+          file.mimetype == "image/jpeg" ||
+          file.mimetype == "image/webp"
         ) {
-            callback(null, true)
-
+          callback(null, true);
         } else {
-            console.log('selete valid image format');
-            callback(null, false)
+          console.log("selete valid image format");
+          callback(null, false);
         }
     },
     limits: {
