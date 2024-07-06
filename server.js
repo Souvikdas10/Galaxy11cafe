@@ -4,7 +4,7 @@ const bodyparser = require('body-parser');
 const mongoose = require('mongoose');
 const ejs = require('ejs');
 const jwt = require ('jsonwebtoken')
-// const flash = require ('connect-flash')
+const flash = require ('connect-flash')
 const session = require ('express-session')
 const cookieparser = require ('cookie-parser')
 const adminauth = require ('./middleware/AdminAuth')
@@ -27,7 +27,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 
 
-// app.use(flash());
+app.use(flash());
 app.use(cookieparser());
 app.use(session({
     cookie: { maxAge: 5000 },

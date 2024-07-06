@@ -11,11 +11,11 @@ const { name } = require('ejs');
 
 exports.adminauth = (req, res, next) => {
     if (req.admin) {
-        console.log(req.admin, "aa");
+        // console.log(req.admin, "aa");
         next();
     } else {
-        console.log(req.admin, "bb");
-        // req.flash('error', "can not access this page ..please login first")
+        // console.log(req.admin, "bb");
+        req.flash('error', "can not access this page ..please login first")
         res.redirect('/admin/')
     }
 }
@@ -25,8 +25,8 @@ exports.registration = (req, res) => {
     res.render('admin/registration', {
         title: 'registration Page',
         data: req.admin,
-        // message: req.flash('message'),
-        // error: req.flash('error'),
+        message: req.flash('message'),
+        error: req.flash('error'),
     })
 }
 
@@ -41,12 +41,12 @@ exports.register_create = (req, res) => {
     }
     signup.save().then(result => {
         // console.log(result);
-        // req.flash('message', "Admin Register Successfull..")
+        req.flash('message', "Admin Register Successfull..")
 
         res.redirect('/admin/')
     }).catch(err => {
         // console.log(err);
-        // req.flash('error', "Admin Register Try again...")
+        req.flash('error', "Admin Register Try again...")
         res.redirect('/admin/registation')
 
     })
@@ -58,8 +58,8 @@ exports.login = (req, res) => {
     loginData.password = (req.cookies.password) ? req.cookies.password : undefined
     res.render('./admin/login', {
         title: "admin || login",
-        // message: req.flash('message'),
-        // error: req.flash('error'),
+        message: req.flash('message'),
+        error: req.flash('error'),
         data1: loginData,
         data: req.admin,
 
@@ -79,25 +79,25 @@ exports.logincreate = (req, res) => {
                     image: data.image
                 }, 'galaxy11cafe@2024', { expiresIn: '1h' })
                 res.cookie('AdminToken', token)
-                console.log(data.name);
-                console.log(data.image);
+                // console.log(data.name);
+                // console.log(data.image);
                 if (req.body.rememberme) {
                     res.cookie('email', req.body.email)
                     res.cookie('password', req.body.password)
                 }
                 // console.log(data);
                 // console.log(req.body);
-                // req.flash('message', "You are Login Successfully")
+                req.flash('message', "You are Login Successfully")
                 res.redirect('/admin/dashboard')
             } else {
-                console.log("Incorrect password");
-                // req.flash('error', "Incorrect password")
+                // console.log("Incorrect password");
+                req.flash('error', "Incorrect password")
 
                 res.redirect('/admin/')
             }
         } else {
             // console.log("Incorrect email");
-            // req.flash('error', "Incorrect Email")
+            req.flash('error', "Incorrect Email")
             res.redirect('/admin/')
         }
     })
@@ -114,6 +114,8 @@ exports.dashboard = (req, res) => {
         title: 'dashboard Page',
         data: req.admin,
         displayData: result,
+        message: req.flash('message'),
+        error: req.flash('error'),
     })
     })
 }
@@ -123,6 +125,8 @@ exports.product = (req, res) => {
         res.render('admin/product', {
             title: 'product Page',
             data: req.admin,
+            message: req.flash('message'),
+            error: req.flash('error'),
             displayData: result,
 
         })
@@ -138,14 +142,14 @@ exports.createProduct = (req, res) => {
         description: req.body.description,
         price: req.body.price
     }).save().then(result => {
-        console.log(result);
-        console.log("Item added successfull..")
-        // req.flash('message', "Item added successfull..")
+        // console.log(result);
+        // console.log("Item added successfull..")
+        req.flash('message', "Product added successfull..")
 
         res.redirect('/admin/product')
     }).catch(err => {
-        console.log(err);
-        // req.flash('error', "item not added ..")
+        // console.log(err);
+        req.flash('error', "Product not added..")
         res.redirect('/admin/product')
 
     })
@@ -159,18 +163,19 @@ exports.edit = (req, res) => {
             title: 'Item Page',
             data: req.admin,
             editData: result,
-            // message: req.flash('message'),
+            message: req.flash('message'),
+            error: req.flash('error'),
         })
     }).catch((err) => {
         console.log(err);
     })
-    console.log("itemId:", pId);
+    // console.log("itemId:", pId);
 }
 
 exports.update = (req, res) => {
     // const image = req.file
     const prod_id = req.body.pId
-    console.log("prod_Id:", prod_id);
+    // console.log("prod_Id:", prod_id);
     const product_name = req.body.product_name
     const description = req.body.description
     const price = req.body.price
@@ -183,8 +188,8 @@ exports.update = (req, res) => {
         // result.image = image.path
         result.save().then(data => {
             res.redirect('/admin/product')
-            console.log(data, "Product Update Successfully");
-            // res.flash(data, "Item Update Successfully");
+            // console.log(data, "Product Update Successfully");
+            req.flash(data, "Item Update Successfully");
         }).catch(err => {
             console.log(err);
         })
@@ -198,7 +203,8 @@ exports.deleteProduct = (req, res) => {
     const pid = req.params.id
     productModel.deleteOne({ _id: pid }).then(del => {
         res.redirect('/admin/product')
-        console.log(del, "data deleted successfully")
+        req.flash('error', "Product Delete Successfully");
+        // console.log(del, "data deleted successfully")
     }).catch(err => {
         console.log(err)
     })
@@ -209,6 +215,8 @@ exports.banner = (req, res) => {
         res.render('admin/banner', {
             title: 'Banner ',
             data: req.admin,
+            message: req.flash('message'),
+            error: req.flash('error'),
             displayData: result,
         })
     })
@@ -221,14 +229,14 @@ exports.createBanner = (req, res) => {
         banner.image = req.file.path
     }
     banner.save().then(result => {
-        console.log(result);
-        // req.flash('message', "Product added successfull..")
-        console.log('message', "Product added successfull..")
+        // console.log(result);
+        req.flash('message', "Banner added successfull..")
+        // console.log('message', "Product added successfull..")
 
         res.redirect('/admin/banner')
     }).catch(err => {
         console.log(err);
-        // req.flash('error', "Product not added ..")
+        req.flash('error', "Banner not added ..")
         res.redirect('/admin/banner')
 
     })
@@ -237,7 +245,7 @@ exports.deleteBanner = (req, res) => {
     const bannerid = req.params.id
     bannerModel.deleteOne({ _id: bannerid }).then(del => {
         res.redirect('/admin/banner')
-        console.log(del, "data deleted successfully")
+        console.log(del, "Banner deleted successfully")
     }).catch(err => {
         console.log(err)
     })
@@ -248,6 +256,8 @@ exports.offer = (req, res) => {
         res.render('admin/offer', {
             title: 'offer ',
             data: req.admin,
+            message: req.flash('message'),
+            error: req.flash('error'),
             displayData: result,
         })
     })
@@ -263,13 +273,13 @@ exports.createoffer = (req, res) => {
     }
     offer.save().then(result => {
         console.log(result);
-        // req.flash('message', "Product added successfull..")
-        console.log('message', "Offer added successfull..")
+        req.flash('message', "Offer added successfull..")
+        // console.log('message', "Offer added successfull..")
 
         res.redirect('/admin/offer')
     }).catch(err => {
         console.log(err);
-        // req.flash('error', "Product not added ..")
+        req.flash('error', "Offer not added ..")
         res.redirect('/admin/offer')
 
     })
@@ -279,7 +289,7 @@ exports.deleteoffer = (req, res) => {
     const offerId = req.params.id
     offerModel.deleteOne({ _id: offerId }).then(del => {
         res.redirect('/admin/offer')
-        console.log(del, "data deleted successfully")
+        console.log(del, "Offer deleted successfully")
     }).catch(err => {
         console.log(err)
     })

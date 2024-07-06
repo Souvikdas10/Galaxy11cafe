@@ -88,6 +88,20 @@
 
 <body>
         <div class="registration-form">
+
+                <%if(message.length>0){%>
+                        <div class="alert alert-success" role="alert">
+                            <%=message%>
+                          </div>
+                          <%}%>
+                    
+                          <%if(error.length>0){%>
+                            <div class="alert alert-danger" role="alert">
+                                <%=error%>
+                              </div>
+                              <%}%>
+
+
                 <h2>Admin Registration</h2>
                 <form action="/admin/registationCreate" method="POST" id="registrationForm" enctype="multipart/form-data">
                         <div class="form-group">

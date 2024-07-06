@@ -5,74 +5,101 @@
 
 
 
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<style>
-body {
-  background-color: #333;
-  color: white;
-  font-family: Arial, sans-serif;
-  text-align: center;
-}
+  <!DOCTYPE html>
+  <html>
 
-h1 {
-  font-size: 3em;
-  margin-top: 100px;
-}
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+      body {
+        background-color: #333;
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
 
-input[type="text"], input[type="password"] {
-  width: 250px;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
+      h1 {
+        font-size: 3em;
+        margin-top: 100px;
+      }
 
-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 250px;
-}
+      input[type="text"],
+      input[type="password"] {
+        width: 250px;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
 
-button:hover {
-  opacity: 0.9;
-}
+      button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 250px;
+      }
 
-.container {
-  margin-top: 100px;
-}
+      button:hover {
+        opacity: 0.9;
+      }
 
-.icon {
-  margin-right: 10px;
-}
-</style>
-</head>
-<body>
+      .container {
+        margin-top: 100px;
+      }
 
-<h1>ＧＡＬＡＸＹ １１</h1>
-<p>𝐿𝒪𝒢 𝐼𝒩</p>
+      .icon {
+        margin-right: 10px;
+      }
+    </style>
+  </head>
 
-<div class="container">
-  <form class="user" action="/admin/logincreate" method="post">
-    <div>
-        <!-- <i class="fa-regular fa-user"></i> -->
-        <i class="fa-solid fa-user"></i>
-      <input type="text" placeholder="Username" name="email" required>
+  <body>
+
+    <h1>ＧＡＬＡＸＹ １１</h1>
+    <p>𝐿𝒪𝒢 𝐼𝒩</p>
+
+    <div class="container">
+
+
+      <form class="user" action="/admin/logincreate" method="post">
+
+
+        <div>
+
+
+          <%if(message.length>0){%>
+            <div class="alert alert-success" role="alert">
+              <%=message%>
+            </div>
+            <%}%>
+
+              <%if(error.length>0){%>
+                <div class="alert alert-danger" role="alert">
+                  <%=error%>
+                </div>
+                <%}%>
+                  <!-- <i class="fa-regular fa-user"></i> -->
+                  <i class="fa-solid fa-user"></i>
+                  <input type="text" placeholder="Username" name="email" required>
+        </div>
+        <div>
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" placeholder="Password" name="password" required>
+        </div>
+        <button type="submit">Login</button>
+      </form>
+      <br><br>
+      <div class="text-center">
+        <a class="small" href="/admin/registration">Dont't have an account? Register!</a>
     </div>
-    <div>
-        <i class="fa-solid fa-lock"></i> 
-             <input type="password" placeholder="Password" name="password" required>
     </div>
-    <button type="submit">Login</button>
-  </form>
-</div>
 
-</body>
-</html>
+  </body>
+
+  </html>
