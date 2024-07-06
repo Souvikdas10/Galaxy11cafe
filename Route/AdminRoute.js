@@ -18,16 +18,17 @@ Route.get('/admin/dashboard',AdminController.adminauth,AdminController.dashboard
 Route.get('/admin/product',AdminController.product)
 Route.post('/admin/Create-product',uploadImage.single('image'),AdminController.createProduct)
 Route.get('/admin/edit/:id',AdminController.edit)
-// Route.post('/admin/update',AdminController.update)
-// Route.delete('/admin/remove/:id',AdminController.remove)
+Route.post('/admin/update',uploadImage.single('image'),AdminController.update)
+Route.get('/admin/delete/:id', AdminController.deleteProduct)
 
 Route.get('/admin/banner',AdminController.banner)
 Route.post('/admin/create-Banner',uploadImage.single('image'),AdminController.createBanner)
-// Route.post('/admin/create-Banner',multiImgUp,AdminController.createBanner)
+Route.get('/admin/deleteBanner/:id', AdminController.deleteBanner)
 
 
 Route.get('/admin/offer',AdminController.offer)
 Route.post('/admin/create-offer',uploadImage.single('image'),AdminController.createoffer)
+Route.get('/admin/deleteOffer/:id', AdminController.deleteoffer)
 
 
 module.exports = Route;

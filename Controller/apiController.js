@@ -5,7 +5,7 @@ const RatingModel = require('../model/ratingModel');
 const BannerModel = require('../model/bannerImg');
 const asyncHandler = require('express-async-handler');
 const offerModel = require('../model/OfferModel')
-const path= require('path');
+const path = require('path');
 
 exports.product = async (req, res) => {
     try {
@@ -103,45 +103,74 @@ exports.getBookings = asyncHandler(async (req, res, next) => {
     }
 });
 
+// exports.getAvailableTimeSlots = asyncHandler(async (req, res, next) => {
+//     const date = req.query.date;
+
+//     try {
+//         const bookings = await Booking.find({ date });
+
+//         const availableTimeSlots = [];
+//         for (let hour = 10; hour < 23; hour++) {
+//             const startTime = `${hour.toString().padStart(2, '0')}:00`;
+//             const endTime = `${hour.toString().padStart(2, '0')}:59`;
+//             let isAvailable = true;
+
+//             bookings.forEach((booking) => {
+//                 if (booking.startTime <= startTime && booking.endTime > startTime) {
+//                     isAvailable = false;
+//                 }
+//             });
+
+//             if (isAvailable) {
+//                 availableTimeSlots.push({ startTime, endTime });
+//             }
+//         }
+
+//         res.status(200).json(availableTimeSlots);
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ message: 'Error fetching available time slots' });
+//     }
+// });
+
+
+
 exports.getAvailableTimeSlots = asyncHandler(async (req, res, next) => {
     const date = req.query.date;
-
+  
     try {
-        const bookings = await Booking.find({ date });
-
-        const availableTimeSlots = [];
-        for (let hour = 9; hour < 21; hour++) {
-            for (let minute = 0; minute < 60; minute += 30) {
-                const startTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-                const endTime = `${hour.toString().padStart(2, '0')}:${(minute + 30).toString().padStart(2, '0')}`;
-                let isAvailable = true;
-                bookings.forEach((booking) => {
-                    if (booking.startTime === startTime && booking.endTime === endTime) {
-                        isAvailable = false;
-                    }
-                });
-
-                if (isAvailable) {
-                    availableTimeSlots.push({ startTime, endTime });
-                }
-            }
+      const bookings = await Booking.find({ date });
+  
+      const availableTimeSlots = [];
+      for (let hour = 10; hour < 22; hour++) {
+        const startTime = `${hour.toString().padStart(2, '0')}:00`;
+        let isAvailable = true;
+  
+        bookings.forEach((booking) => {
+          if (booking.startTime <= startTime && booking.endTime > startTime) {
+            isAvailable = false;
+          }
+        });
+  
+        if (isAvailable) {
+          availableTimeSlots.push({ startTime });
         }
-
-        res.status(200).json(availableTimeSlots);
+      }
+  
+      res.status(200).json(availableTimeSlots);
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error fetching available time slots' });
+      console.error(err);
+      res.status(500).json({ message: 'Error fetching available time slots' });
     }
-});
-
-exports.Offerzone = async (req , res) =>{
+  });
+exports.Offerzone = async (req, res) => {
     try {
         const offerData = await offerModel.find()
-        res.status(200).json({ success: true, msg: " Offer fetch Successfully", data: offerData})
+        res.status(200).json({ success: true, msg: " Offer fetch Successfully", data: offerData })
     } catch (error) {
         res.status(400).json({ success: true, msg: error.message })
 
-    } 
+    }
 }
 
 

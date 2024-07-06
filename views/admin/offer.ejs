@@ -13,9 +13,9 @@
                         </ol> -->
                                 <div class="card mb-4">
                                     <div class="card-header">
-                                        <i class="fas fa-table me-1"></i>
-                                        DataTable Example
-                                    </div>
+                                        <!-- <i class="fas fa-table me-1"></i>
+                                        DataTable Example -->
+                                    <!-- </div> -->
 
                                     <!-- <a href="/admin/add-product" class="btn btn-success">Add-Student</a> -->
 
@@ -70,6 +70,8 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+
                                     <div class="card-body">
                                         <table id="datatablesSimple">
                                             <thead>
@@ -77,6 +79,8 @@
                                                     <th>Image</th>
                                                     <th>Offer Name</th>
                                                     <th>Offer Percentage</th>
+                                                    <th>Action</th>
+
 
                                                 </tr>
                                             </thead>
@@ -85,6 +89,7 @@
                                                     <th>Image</th>
                                                     <th>Offer Name</th>
                                                     <th>Offer Percentage</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
@@ -102,8 +107,8 @@
                                                         <td>
                                                             <%=data2.offer_percentage%>
                                                         </td>
-                                                        <!-- <td><a href="/admin/remove/<%= data2._id%>" class="btn btn-danger">
-                                                            <i class="fa-solid fa-trash"></i></a></td> -->
+                                                        <td><a href="/admin/deleteOffer/<%= data2._id%>" class="btn btn-danger">
+                                                            <i class="fa-solid fa-trash"></i></a></td>
                                                     </tr>
                                                     <%}}%>
                                             </tbody>

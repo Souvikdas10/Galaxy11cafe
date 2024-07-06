@@ -1,7 +1,8 @@
 const productModel = require('../model/productModel');
 const bannerModel = require('../model/bannerImg');
 const adminModel = require('../model/adminModel')
-const offerModel = require ('../model/OfferModel')
+const offerModel = require('../model/OfferModel')
+const bookingModel = require('../model/bookingModel')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const path = require('path');
@@ -10,10 +11,10 @@ const { name } = require('ejs');
 
 exports.adminauth = (req, res, next) => {
     if (req.admin) {
-        // console.log(req.admin, "aa");
+        console.log(req.admin, "aa");
         next();
     } else {
-        // console.log(req.admin, "bb");
+        console.log(req.admin, "bb");
         // req.flash('error', "can not access this page ..please login first")
         res.redirect('/admin/')
     }
@@ -108,10 +109,12 @@ exports.logout = (req, res) => {
 }
 
 exports.dashboard = (req, res) => {
+    bookingModel.find().then(result => {
     res.render('admin/dashboard', {
         title: 'dashboard Page',
-        data: req.admin
-
+        data: req.admin,
+        displayData: result,
+    })
     })
 }
 
@@ -127,35 +130,80 @@ exports.product = (req, res) => {
 }
 
 exports.createProduct = (req, res) => {
-    const productData = new productModel({
+    const image = req.file
+    productModel({
         product_name: req.body.product_name,
+        image: image.path,
+        // image: req.file.filename,
         description: req.body.description,
         price: req.body.price
-    })
-    if (req.file) {
-        productData.image = req.file.path
-    }
-    productData.save().then(result => {
+    }).save().then(result => {
         console.log(result);
-        // req.flash('message', "Product added successfull..")
-        console.log('message', "Product added successfull..")
+        console.log("Item added successfull..")
+        // req.flash('message', "Item added successfull..")
 
         res.redirect('/admin/product')
     }).catch(err => {
         console.log(err);
-        // req.flash('error', "Product not added ..")
+        // req.flash('error', "item not added ..")
         res.redirect('/admin/product')
 
     })
 }
 
 exports.edit = (req, res) => {
-    res.render('admin/edit', {
-        title: 'edit Page',
-        // displayData: result,
+    pId = req.params.id;
+    // console.log("pid", pId);
+    productModel.findById(pId).then(result => {
+        res.render('admin/edit', {
+            title: 'Item Page',
+            data: req.admin,
+            editData: result,
+            // message: req.flash('message'),
+        })
+    }).catch((err) => {
+        console.log(err);
+    })
+    console.log("itemId:", pId);
+}
 
+exports.update = (req, res) => {
+    // const image = req.file
+    const prod_id = req.body.pId
+    console.log("prod_Id:", prod_id);
+    const product_name = req.body.product_name
+    const description = req.body.description
+    const price = req.body.price
+
+    productModel.findById(prod_id).then((result) => {
+
+        result.product_name = product_name
+        result.description = description
+        result.price = price
+        // result.image = image.path
+        result.save().then(data => {
+            res.redirect('/admin/product')
+            console.log(data, "Product Update Successfully");
+            // res.flash(data, "Item Update Successfully");
+        }).catch(err => {
+            console.log(err);
+        })
+    }).catch(err => {
+        console.log(err);
+    })
+
+}
+
+exports.deleteProduct = (req, res) => {
+    const pid = req.params.id
+    productModel.deleteOne({ _id: pid }).then(del => {
+        res.redirect('/admin/product')
+        console.log(del, "data deleted successfully")
+    }).catch(err => {
+        console.log(err)
     })
 }
+
 exports.banner = (req, res) => {
     bannerModel.find().then(result => {
         res.render('admin/banner', {
@@ -185,17 +233,27 @@ exports.createBanner = (req, res) => {
 
     })
 }
- 
-exports.offer = (req,res)=>{
+exports.deleteBanner = (req, res) => {
+    const bannerid = req.params.id
+    bannerModel.deleteOne({ _id: bannerid }).then(del => {
+        res.redirect('/admin/banner')
+        console.log(del, "data deleted successfully")
+    }).catch(err => {
+        console.log(err)
+    })
+}
+
+exports.offer = (req, res) => {
     offerModel.find().then(result => {
         res.render('admin/offer', {
             title: 'offer ',
+            data: req.admin,
             displayData: result,
         })
     })
 }
 
-exports.createoffer = (req,res)=>{
+exports.createoffer = (req, res) => {
     const offer = new offerModel({
         offer_name: req.body.offer_name,
         offer_percentage: req.body.offer_percentage,
@@ -214,5 +272,15 @@ exports.createoffer = (req,res)=>{
         // req.flash('error', "Product not added ..")
         res.redirect('/admin/offer')
 
+    })
+}
+
+exports.deleteoffer = (req, res) => {
+    const offerId = req.params.id
+    offerModel.deleteOne({ _id: offerId }).then(del => {
+        res.redirect('/admin/offer')
+        console.log(del, "data deleted successfully")
+    }).catch(err => {
+        console.log(err)
     })
 }
