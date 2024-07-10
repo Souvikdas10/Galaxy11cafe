@@ -8,6 +8,10 @@ const bannerSchema = new Schema({
         type: String,
         required: true
     },
+    mobileImage: {
+        type: String,
+        required: true
+    },
     description: {
         type: String,
         // required: true

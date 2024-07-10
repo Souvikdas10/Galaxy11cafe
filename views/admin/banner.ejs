@@ -60,6 +60,11 @@
                                                                 <input type="file" class="form-control" id="image"
                                                                     name="image">
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label for="image" class="col-form-label">Mobile Image:</label>
+                                                                <input type="file" class="form-control" id="image"
+                                                                    name="mobileImage">
+                                                            </div>
                                                             <div class="modal-footer form-group">
                                                                 <label class="col-form-label"></label>
 
@@ -78,7 +83,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Image</th>
-                                                    <!-- <th>Description</th> -->
+                                                    <th>Mobile Image</th>
                                                     <th>Action</th>
 
                                                 </tr>
@@ -86,7 +91,7 @@
                                             <tfoot>
                                                 <tr>
                                                     <th>Image</th>
-                                                    <!-- <th>Description</th> -->
+                                                    <th>Mobile Image</th>
                                                     <th>Action</th>
                                                     
                                                 </tr>
@@ -97,6 +102,8 @@
                                                     for(let data2 of displayData){%>
                                                     <tr>
                                                         <td><img src="/<%-data2.image%>" alt="" height="50px"
+                                                                width="50px"></td>
+                                                        <td><img src="/<%-data2.mobileImage%>" alt="" height="50px"
                                                                 width="50px"></td>
 
                                                         

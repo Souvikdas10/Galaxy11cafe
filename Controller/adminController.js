@@ -221,31 +221,37 @@ exports.banner = (req, res) => {
         })
     })
 }
+
+
 exports.createBanner = (req, res) => {
     const banner = new bannerModel({
         description: req.body.description,
-    })
-    if (req.file) {
-        banner.image = req.file.path
-    }
-    banner.save().then(result => {
-        // console.log(result);
-        req.flash('message', "Banner added successfull..")
-        // console.log('message', "Product added successfull..")
+    });
 
-        res.redirect('/admin/banner')
+    if (req.files['image']) {
+        banner.image = req.files['image'][0].path;
+    }
+    if (req.files['mobileImage']) {
+        banner.mobileImage = req.files['mobileImage'][0].path;
+    }
+
+    banner.save().then(result => {
+        req.flash('message', "Banner added successfully.");
+        res.redirect('/admin/banner');
     }).catch(err => {
         console.log(err);
-        req.flash('error', "Banner not added ..")
-        res.redirect('/admin/banner')
+        req.flash('error', "Banner not added.");
+        res.redirect('/admin/banner');
+    });
+};
 
-    })
-}
+
 exports.deleteBanner = (req, res) => {
     const bannerid = req.params.id
     bannerModel.deleteOne({ _id: bannerid }).then(del => {
         res.redirect('/admin/banner')
-        console.log(del, "Banner deleted successfully")
+        req.flash(del, "Banner deleted successfully")
+        // console.log(del, "Banner deleted successfully")
     }).catch(err => {
         console.log(err)
     })
@@ -272,7 +278,7 @@ exports.createoffer = (req, res) => {
         offer.image = req.file.path
     }
     offer.save().then(result => {
-        console.log(result);
+        // console.log(result);
         req.flash('message', "Offer added successfull..")
         // console.log('message', "Offer added successfull..")
 

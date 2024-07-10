@@ -28,35 +28,24 @@ exports.banner = async (req, res) => {
     }
 }
 
-exports.createReating = async (req, res) => {
+exports.createReating = async (req, res) => {    
     try {
-        // let imageArray=[]
-        const ratings = await new ratingModel({
+        const images = req.files.map(file => file.path);
+
+        const newRating = new ratingModel({
             name: req.body.name,
             description: req.body.description,
             ratings: req.body.ratings,
-            // image: req.body.image
-
+            image: images,
         });
-        // console.log(req.body.image,'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-        // console.log(req);
-        // req.file.map(item =>{
-        //     imageArray.push (item.filename)
-        //     console.log(item,">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        // })
 
-        if (req.file) {
-            ratings.image = req.file.path
-
-        }
-
-        const result = await ratings.save();
+        const result = await newRating.save();
         res.status(201).json({ message: 'Rating created successfully!', data: result });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Error, Try again' });
     }
-}
+};
 
 exports.rating = async (req, res) => {
     try {

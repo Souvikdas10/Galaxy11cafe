@@ -2,7 +2,6 @@ const express = require('express');
 const Route = express.Router()
 const AdminController = require('../Controller/adminController')
 const uploadImage=require('../middleware/uploadImg')
-const multiImgUp=require('../middleware/mutiImg')
 const Duplicate=require('../middleware/CheckDuplicate')
 
 Route.get('/admin/registration' , AdminController.registration)
@@ -22,7 +21,9 @@ Route.post('/admin/update',uploadImage.single('image'),AdminController.update)
 Route.get('/admin/delete/:id', AdminController.deleteProduct)
 
 Route.get('/admin/banner',AdminController.adminauth,AdminController.banner)
-Route.post('/admin/create-Banner',uploadImage.single('image'),AdminController.createBanner)
+// Route.post('/admin/create-Banner',uploadImage.single('image'),AdminController.createBanner)
+Route.post('/admin/create-Banner', uploadImage.fields([{ name: 'image', maxCount: 1 }, { name: 'mobileImage', maxCount: 1 }]), AdminController.createBanner);
+
 Route.get('/admin/deleteBanner/:id', AdminController.deleteBanner)
 
 

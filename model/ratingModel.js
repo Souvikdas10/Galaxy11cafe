@@ -7,7 +7,7 @@ const ratingSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        
+
     },
     ratings: {
         type: mongoose.Mixed,
@@ -19,10 +19,7 @@ const ratingSchema = new mongoose.Schema({
         default: { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1 },
         required: true
     },
-    image: {
-        type: String,
-        // required: true
-},
+    image: [String]
 
 });
 
