@@ -18,7 +18,8 @@ const uploadlmage = multer({
         if (
             file.mimetype == 'image/png' ||
             file.mimetype == 'image/jpg' ||
-            file.mimetype == 'image/jpeg'
+            file.mimetype == 'image/jpeg'||
+            file.mimetype == 'image/webp'
         ) {
             callback(null, true)
 
