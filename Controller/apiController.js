@@ -31,7 +31,6 @@ exports.banner = async (req, res) => {
 exports.createReating = async (req, res) => {    
     try {
         const images = req.files.map(file => file.path);
-
         const newRating = new ratingModel({
             name: req.body.name,
             description: req.body.description,
