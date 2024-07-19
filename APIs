@@ -14,3 +14,14 @@ Bookings Time Slot [get method] --> http://localhost:3500/api/available-time-slo
 
 Offer Zone [get method] --> http://localhost:3500/api/offer
 
+
+
+
+
+
+admin panel
+
+login url [get method] --> http://localhost:3500/admin/
+login create url [get method] --> http://localhost:3500/admin/logincreate
+
+
